@@ -1,0 +1,45 @@
+name: Main
+
+defaults:
+  run:
+    shell: bash
+
+on:
+  workflow_dispatch:
+
+jobs:
+  conda-size:
+    name: Conda size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/nix-setup
+      - run: nix run --print-build-logs .#pytorch-conda-size
+
+  docker-image-size:
+    name: Docker image size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/nix-setup
+      - run: nix run --print-build-logs .#pytorch-docker-image-size
+
+  nix-store-size:
+    name: Nix store size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/nix-setup
+      - run: nix run --print-build-logs .#pytorch-nix-store-size
+
+  nix-binary-cache-size-zstd:
+    name: Nix binary cache size (zstd)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        compression-level: [1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/nix-setup
+      - run: nix run --print-build-logs .#pytorch-nix-binary-cache-size-zstd-${{ matrix.compression-level }}
