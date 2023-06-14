@@ -20,7 +20,7 @@ runs:
           keep-derivations = true
           keep-outputs = true
           max-jobs = auto
-          max-substitution-jobs = 1024
+          max-substitution-jobs = 32
           narinfo-cache-negative-ttl = 0
           system-features = nixos-test benchmark big-parallel kvm
           trusted-users = ["root" "@nixbld" "@wheel" "connorbaker" "runner"];
