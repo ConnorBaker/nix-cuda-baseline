@@ -56,14 +56,17 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        # TODO(@connorbaker): More levels!
-        compression-level: [1, 2, 3, 4, 5]
+        compression-level: [1, 2, 3, 4, 5, 6, 7, 8, 9]
     outputs:
       xz_1_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_1_json }}
       xz_2_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_2_json }}
       xz_3_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_3_json }}
       xz_4_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_4_json }}
       xz_5_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_5_json }}
+      xz_6_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_6_json }}
+      xz_7_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_7_json }}
+      xz_8_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_8_json }}
+      xz_9_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_9_json }}
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/nix-setup
@@ -79,14 +82,27 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        # TODO(@connorbaker): More levels!
-        compression-level: [1, 2, 3, 4, 5]
+        compression-level: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
     outputs:
       zstd_1_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_1_json }}
       zstd_2_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_2_json }}
       zstd_3_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_3_json }}
       zstd_4_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_4_json }}
       zstd_5_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_5_json }}
+      zstd_6_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_6_json }}
+      zstd_7_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_7_json }}
+      zstd_8_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_8_json }}
+      zstd_9_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_9_json }}
+      zstd_10_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_10_json }}
+      zstd_11_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_11_json }}
+      zstd_12_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_12_json }}
+      zstd_13_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_13_json }}
+      zstd_14_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_14_json }}
+      zstd_15_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_15_json }}
+      zstd_16_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_16_json }}
+      zstd_17_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_17_json }}
+      zstd_18_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_18_json }}
+      zstd_19_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_19_json }}
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/nix-setup
@@ -177,6 +193,34 @@ jobs:
           ZSTD_4_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_4_json).human_readable }}
           ZSTD_5_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_5_json).size }}
           ZSTD_5_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_5_json).human_readable }}
+          ZSTD_6_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_6_json).size }}
+          ZSTD_6_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_6_json).human_readable }}
+          ZSTD_7_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_7_json).size }}
+          ZSTD_7_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_7_json).human_readable }}
+          ZSTD_8_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_8_json).size }}
+          ZSTD_8_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_8_json).human_readable }}
+          ZSTD_9_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_9_json).size }}
+          ZSTD_9_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_9_json).human_readable }}
+          ZSTD_10_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_10_json).size }}
+          ZSTD_10_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_10_json).human_readable }}
+          ZSTD_11_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_11_json).size }}
+          ZSTD_11_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_11_json).human_readable }}
+          ZSTD_12_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_12_json).size }}
+          ZSTD_12_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_12_json).human_readable }}
+          ZSTD_13_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_13_json).size }}
+          ZSTD_13_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_13_json).human_readable }}
+          ZSTD_14_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_14_json).size }}
+          ZSTD_14_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_14_json).human_readable }}
+          ZSTD_15_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_15_json).size }}
+          ZSTD_15_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_15_json).human_readable }}
+          ZSTD_16_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_16_json).size }}
+          ZSTD_16_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_16_json).human_readable }}
+          ZSTD_17_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_17_json).size }}
+          ZSTD_17_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_17_json).human_readable }}
+          ZSTD_18_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_18_json).size }}
+          ZSTD_18_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_18_json).human_readable }}
+          ZSTD_19_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_19_json).size }}
+          ZSTD_19_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_19_json).human_readable }}
         run: |
           compression_ratio() {
             awk "BEGIN{printf \"%.4f\", ($STORE_SIZE / $1)}"
@@ -194,6 +238,20 @@ jobs:
           | 3 | $ZSTD_3_HUMAN_READABLE | $ZSTD_3_SIZE | $(compression_ratio $ZSTD_3_SIZE) |
           | 4 | $ZSTD_4_HUMAN_READABLE | $ZSTD_4_SIZE | $(compression_ratio $ZSTD_4_SIZE) |
           | 5 | $ZSTD_5_HUMAN_READABLE | $ZSTD_5_SIZE | $(compression_ratio $ZSTD_5_SIZE) |
+          | 6 | $ZSTD_6_HUMAN_READABLE | $ZSTD_6_SIZE | $(compression_ratio $ZSTD_6_SIZE) |
+          | 7 | $ZSTD_7_HUMAN_READABLE | $ZSTD_7_SIZE | $(compression_ratio $ZSTD_7_SIZE) |
+          | 8 | $ZSTD_8_HUMAN_READABLE | $ZSTD_8_SIZE | $(compression_ratio $ZSTD_8_SIZE) |
+          | 9 | $ZSTD_9_HUMAN_READABLE | $ZSTD_9_SIZE | $(compression_ratio $ZSTD_9_SIZE) |
+          | 10 | $ZSTD_10_HUMAN_READABLE | $ZSTD_10_SIZE | $(compression_ratio $ZSTD_10_SIZE) |
+          | 11 | $ZSTD_11_HUMAN_READABLE | $ZSTD_11_SIZE | $(compression_ratio $ZSTD_11_SIZE) |
+          | 12 | $ZSTD_12_HUMAN_READABLE | $ZSTD_12_SIZE | $(compression_ratio $ZSTD_12_SIZE) |
+          | 13 | $ZSTD_13_HUMAN_READABLE | $ZSTD_13_SIZE | $(compression_ratio $ZSTD_13_SIZE) |
+          | 14 | $ZSTD_14_HUMAN_READABLE | $ZSTD_14_SIZE | $(compression_ratio $ZSTD_14_SIZE) |
+          | 15 | $ZSTD_15_HUMAN_READABLE | $ZSTD_15_SIZE | $(compression_ratio $ZSTD_15_SIZE) |
+          | 16 | $ZSTD_16_HUMAN_READABLE | $ZSTD_16_SIZE | $(compression_ratio $ZSTD_16_SIZE) |
+          | 17 | $ZSTD_17_HUMAN_READABLE | $ZSTD_17_SIZE | $(compression_ratio $ZSTD_17_SIZE) |
+          | 18 | $ZSTD_18_HUMAN_READABLE | $ZSTD_18_SIZE | $(compression_ratio $ZSTD_18_SIZE) |
+          | 19 | $ZSTD_19_HUMAN_READABLE | $ZSTD_19_SIZE | $(compression_ratio $ZSTD_19_SIZE) |
 
           EOF
 
@@ -210,6 +268,14 @@ jobs:
           XZ_4_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_4_json).human_readable }}
           XZ_5_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_5_json).size }}
           XZ_5_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_5_json).human_readable }}
+          XZ_6_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_6_json).size }}
+          XZ_6_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_6_json).human_readable }}
+          XZ_7_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_7_json).size }}
+          XZ_7_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_7_json).human_readable }}
+          XZ_8_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_8_json).size }}
+          XZ_8_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_8_json).human_readable }}
+          XZ_9_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_9_json).size }}
+          XZ_9_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_9_json).human_readable }}
         run: |
           compression_ratio() {
             awk "BEGIN{printf \"%.4f\", ($STORE_SIZE / $1)}"
@@ -227,5 +293,9 @@ jobs:
           | 3 | $XZ_3_HUMAN_READABLE | $XZ_3_SIZE | $(compression_ratio $XZ_3_SIZE) |
           | 4 | $XZ_4_HUMAN_READABLE | $XZ_4_SIZE | $(compression_ratio $XZ_4_SIZE) |
           | 5 | $XZ_5_HUMAN_READABLE | $XZ_5_SIZE | $(compression_ratio $XZ_5_SIZE) |
+          | 6 | $XZ_6_HUMAN_READABLE | $XZ_6_SIZE | $(compression_ratio $XZ_6_SIZE) |
+          | 7 | $XZ_7_HUMAN_READABLE | $XZ_7_SIZE | $(compression_ratio $XZ_7_SIZE) |
+          | 8 | $XZ_8_HUMAN_READABLE | $XZ_8_SIZE | $(compression_ratio $XZ_8_SIZE) |
+          | 9 | $XZ_9_HUMAN_READABLE | $XZ_9_SIZE | $(compression_ratio $XZ_9_SIZE) |
 
           EOF
