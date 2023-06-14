@@ -35,7 +35,12 @@
       compression = ["zstd"];
       compression-level = map toString (lib.lists.range 1 19);
     })
-    [{compression = "none"; compression-level = "-1";}]
+    [
+      {
+        compression = "none";
+        compression-level = "-1";
+      }
+    ]
   ];
 in {
   perSystem = {pkgs, ...}: let

@@ -24,6 +24,9 @@ writeShellApplication {
     ''
     # Print the size of the image in JSON
     + ''
-      printf '{"size": %d, "human_readable": "%s"}\n' "$SIZE" "$HUMAN_READABLE"
+      jq -cnr \
+        --argjson size "$SIZE" \
+        --arg human_readable "$HUMAN_READABLE" \
+        '{size: $size, human_readable: $human_readable}'
     '';
 }

@@ -42,15 +42,23 @@ writeShellApplication {
       PKGS_COMPRESSED_SIZE="$(du -B1 -sS "$MAMBA_ROOT_PREFIX/pkgs" | cut -f1)"
       PKGS_COMPRESSED_HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$PKGS_COMPRESSED_SIZE")"
     ''
-    # Print the results as JSON with printf
+    # Print the results as JSON
     + ''
-      printf '{"env_size": %d, "env_human_readable": "%s", "pkgs_size": %d, "pkgs_human_readable": "%s", "pkgs_compressed_size": %d, "pkgs_compressed_human_readable": "%s"}\n' \
-        "$ENV_SIZE" \
-        "$ENV_HUMAN_READABLE" \
-        "$PKGS_SIZE" \
-        "$PKGS_HUMAN_READABLE" \
-        "$PKGS_COMPRESSED_SIZE" \
-        "$PKGS_COMPRESSED_HUMAN_READABLE"
+      jq -cnr \
+        --argjson env_size "$ENV_SIZE" \
+        --arg env_human_readable "$ENV_HUMAN_READABLE" \
+        --argjson pkgs_size "$PKGS_SIZE" \
+        --arg pkgs_human_readable "$PKGS_HUMAN_READABLE" \
+        --argjson pkgs_compressed_size "$PKGS_COMPRESSED_SIZE" \
+        --arg pkgs_compressed_human_readable "$PKGS_COMPRESSED_HUMAN_READABLE" \
+      '{
+        env_size: $env_size,
+        env_human_readable: $env_human_readable,
+        pkgs_size: $pkgs_size,
+        pkgs_human_readable: $pkgs_human_readable,
+        pkgs_compressed_size: $pkgs_compressed_size,
+        pkgs_compressed_human_readable: $pkgs_compressed_human_readable,
+      }'
     ''
     # Cleanup
     + ''

@@ -1,13 +1,14 @@
 {
   compression ? "xz",
   compression-level ? "-1",
+  jq,
   nix,
   python3Packages,
   writeShellApplication,
 }:
 writeShellApplication {
   name = "pytorch-nix-binary-cache-size-${compression}-${compression-level}";
-  runtimeInputs = [nix];
+  runtimeInputs = [jq nix];
   text =
     # Create the temporary binary cache
     ''
@@ -22,7 +23,10 @@ writeShellApplication {
     + ''
       SIZE="$(du -B1 -s "$BINARY_CACHE" | cut -f1)"
       HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$SIZE")"
-      printf '{"size": %d, "human_readable": "%s"}\n' "$SIZE" "$HUMAN_READABLE"
+      jq -cnr \
+        --argjson size "$SIZE" \
+        --arg human_readable "$HUMAN_READABLE" \
+        '{size: $size, human_readable: $human_readable}'
     ''
     # Cleanup
     + ''

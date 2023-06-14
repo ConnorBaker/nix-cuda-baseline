@@ -19,22 +19,39 @@ jobs:
       - id: conda-size
         run: |
           nix run --print-build-logs .#pytorch-conda-size \
-            | jq -c '"json=\(.)"' \
+            | jq -cr '"json=\(.)"' \
             | tee -a "$GITHUB_OUTPUT"
 
-  conda-size-markdown:
-    name: Conda size markdown
+  docker-image-size:
+    name: Docker image size
     runs-on: ubuntu-latest
-    needs: conda-size
-    env:
-      ENV_SIZE: ${{ fromJSON(needs.conda-size.outputs.json).env_size }}
-      ENV_HUMAN_READABLE: ${{ fromJSON(needs.conda-size.outputs.json).env_human_readable }}
-      PKGS_SIZE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_size }}
-      PKGS_HUMAN_READABLE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_human_readable }}
-      PKGS_COMPRESSED_SIZE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_compressed_size }}
-      PKGS_COMPRESSED_HUMAN_READABLE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_compressed_human_readable }}
+    outputs:
+      json: ${{ steps.docker-image-size.outputs.json }}
     steps:
-      - run: |
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/nix-setup
+      - id: docker-image-size
+        run: |
+          nix run --print-build-logs .#pytorch-docker-image-size \
+            | jq -cr '"json=\(.)"' \
+            | tee -a "$GITHUB_OUTPUT"
+
+  markdown-summary:
+    name: Markdown summary
+    runs-on: ubuntu-latest
+    needs:
+      - conda-size
+      - docker-image-size
+    steps:
+      - name: Conda size markdown
+        env:
+          ENV_SIZE: ${{ fromJSON(needs.conda-size.outputs.json).env_size }}
+          ENV_HUMAN_READABLE: ${{ fromJSON(needs.conda-size.outputs.json).env_human_readable }}
+          PKGS_SIZE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_size }}
+          PKGS_HUMAN_READABLE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_human_readable }}
+          PKGS_COMPRESSED_SIZE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_compressed_size }}
+          PKGS_COMPRESSED_HUMAN_READABLE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_compressed_human_readable }}
+        run: |
           echo "## Conda size" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "Components:" >> "$GITHUB_STEP_SUMMARY"
@@ -50,27 +67,31 @@ jobs:
           echo "| Packages (compressed) | $PKGS_COMPRESSED_HUMAN_READABLE | $PKGS_COMPRESSED_SIZE |" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Docker image size markdown
+        env:
+          SIZE: ${{ fromJSON(needs.docker-image-size.outputs.json).size }}
+          HUMAN_READABLE: ${{ fromJSON(needs.docker-image-size.outputs.json).human_readable }}
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
+          ## Docker image size
 
-  # docker-image-size:
-  #   name: Docker image size
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/nix-setup
-  #     - run: |
-  #         JSON="$(nix run --print-build-logs .#pytorch-docker-image-size)"
+          The size of the compressed Docker image:
 
-  #         SIZE="$(jq -r .size <<< "$JSON")"
-  #         HUMAN_READABLE="$(jq -r .human_readable <<< "$JSON")"
+          | Size | Bytes |
+          | --- | --- |
+          | $HUMAN_READABLE | $SIZE |
 
-  #         echo "## Docker image size" >> "$GITHUB_STEP_SUMMARY"
-  #         echo "" >> "$GITHUB_STEP_SUMMARY"
-  #         echo "The size of the compressed Docker image" >> "$GITHUB_STEP_SUMMARY"
-  #         echo "" >> "$GITHUB_STEP_SUMMARY"
-  #         echo "| Size | Bytes |" >> "$GITHUB_STEP_SUMMARY"
-  #         echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
-  #         echo "| $HUMAN_READABLE | $SIZE |" >> "$GITHUB_STEP_SUMMARY"
-  #         echo "" >> "$GITHUB_STEP_SUMMARY"
+          EOF
+
+        # run: |
+        #   echo "## Docker image size" >> "$GITHUB_STEP_SUMMARY"
+        #   echo "" >> "$GITHUB_STEP_SUMMARY"
+        #   echo "The size of the compressed Docker image" >> "$GITHUB_STEP_SUMMARY"
+        #   echo "" >> "$GITHUB_STEP_SUMMARY"
+        #   echo "| Size | Bytes |" >> "$GITHUB_STEP_SUMMARY"
+        #   echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
+        #   echo "| $HUMAN_READABLE | $SIZE |" >> "$GITHUB_STEP_SUMMARY"
+        #   echo "" >> "$GITHUB_STEP_SUMMARY"
 
   # nix-store-size:
   #   name: Nix store size
