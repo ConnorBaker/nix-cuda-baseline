@@ -17,13 +17,13 @@ writeShellApplication {
     # Get the size of the image
     + ''
       SIZE="$(
-        reg manifest "$REPO:$TAG@sha256:$SHA256" \
-          | jq '[.layers[].size] | add' \
-          | numfmt --to iec --format '%.4f'
+        reg manifest "$REPO:$TAG@sha256:$SHA256" 2>/dev/null \
+          | jq '[.layers[].size] | add'
       )"
+      HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$SIZE")"
     ''
-    # Print the size of the image
+    # Print the size of the image in JSON
     + ''
-      echo "PyTorch docker compressed image size: $SIZE"
+      printf '{"size": %d, "human_readable": "%s"}\n' "$SIZE" "$HUMAN_READABLE"
     '';
 }

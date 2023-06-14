@@ -13,20 +13,16 @@ writeShellApplication {
     ''
       BINARY_CACHE="$(mktemp -d)"
     ''
-    # Copy PyTorch to the binary cache
+    # Copy PyTorch to the binary cache (without printing anything to stdout)
     + ''
-      time nix copy ${python3Packages.pytorch.outPath} \
-        --print-build-logs \
+      nix copy -v ${python3Packages.pytorch.outPath} 1>&2 \
         --to "file:///$BINARY_CACHE?compression=${compression}&compression-level=${compression-level}"
     ''
     # Print the size of the binary cache
     + ''
-      CACHE_SIZE="$(
-        du -B1 -s "$BINARY_CACHE" \
-          | cut -f1 \
-          | numfmt --to iec --format '%.4f'
-      )"
-      echo "PyTorch Nix binary cache size: $CACHE_SIZE"
+      SIZE="$(du -B1 -s "$BINARY_CACHE" | cut -f1)"
+      HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$SIZE")"
+      printf '{"size": %d, "human_readable": "%s"}\n' "$SIZE" "$HUMAN_READABLE"
     ''
     # Cleanup
     + ''

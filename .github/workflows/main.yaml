@@ -14,7 +14,30 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/nix-setup
-      - run: nix run --print-build-logs .#pytorch-conda-size
+      - run: |
+          JSON="$(nix run --print-build-logs .#pytorch-conda-size)"
+
+          ENV_SIZE="$(jq -r .env_size <<< "$JSON")"
+          ENV_HUMAN_READABLE="$(jq -r .env_human_readable <<< "$JSON")"
+          PKGS_SIZE="$(jq -r .pkgs_size <<< "$JSON")"
+          PKGS_HUMAN_READABLE="$(jq -r .pkgs_human_readable <<< "$JSON")"
+          PKGS_COMPRESSED_SIZE="$(jq -r .pkgs_compressed_size <<< "$JSON")"
+          PKGS_COMPRESSED_HUMAN_READABLE="$(jq -r .pkgs_compressed_human_readable <<< "$JSON")"
+
+          echo "## Conda size" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Components:" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "  - Environment: the environment directory size" >> "$GITHUB_STEP_SUMMARY"
+          echo "  - Packages: the packages directory size" >> "$GITHUB_STEP_SUMMARY"
+          echo "  - Packages (compressed): the size of compressed files in the packages directory (representative of downloaded artifacts)" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Component | Size | Bytes |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- | --- |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Environment | $ENV_HUMAN_READABLE | $ENV_SIZE |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Packages | $PKGS_HUMAN_READABLE | $PKGS_SIZE |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Packages (compressed) | $PKGS_COMPRESSED_HUMAN_READABLE | $PKGS_COMPRESSED_SIZE |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
 
   docker-image-size:
     name: Docker image size
@@ -22,7 +45,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/nix-setup
-      - run: nix run --print-build-logs .#pytorch-docker-image-size
+      - run: |
+          JSON="$(nix run --print-build-logs .#pytorch-docker-image-size)"
+
+          SIZE="$(jq -r .size <<< "$JSON")"
+          HUMAN_READABLE="$(jq -r .human_readable <<< "$JSON")"
+
+          echo "## Docker image size" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "The size of the compressed Docker image" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Size | Bytes |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| $HUMAN_READABLE | $SIZE |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
 
   nix-store-size:
     name: Nix store size
@@ -30,7 +66,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/nix-setup
-      - run: nix run --print-build-logs .#pytorch-nix-store-size
+      - run: |
+          JSON="$(nix run --print-build-logs .#pytorch-nix-store-size)"
+
+          SIZE="$(jq -r .size <<< "$JSON")"
+          HUMAN_READABLE="$(jq -r .human_readable <<< "$JSON")"
+
+          echo "## Nix store size" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "The size of the closure in the Nix store" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Size | Bytes |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| $HUMAN_READABLE | $SIZE |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
 
   nix-binary-cache-size-zstd:
     name: Nix binary cache size (zstd)
@@ -42,4 +91,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/nix-setup
-      - run: nix run --print-build-logs .#pytorch-nix-binary-cache-size-zstd-${{ matrix.compression-level }}
+      - run: |
+          JSON="$(nix run --print-build-logs .#pytorch-nix-binary-cache-size-zstd-${{ matrix.compression-level }})"
+
+          SIZE="$(jq -r .size <<< "$JSON")"
+          HUMAN_READABLE="$(jq -r .human_readable <<< "$JSON")"
+
+          echo "## Nix binary cache size (zstd;${{ matrix.compression-level }}) " >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "The size of the closure in the Nix binary cache using zstd at compression level ${{ matrix.compression-level }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Size | Bytes |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| $HUMAN_READABLE | $SIZE |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
