@@ -3,6 +3,7 @@
     ./options.nix
     ./config.nix
     ./apps
+    ./devShells
   ];
 
   perSystem = {

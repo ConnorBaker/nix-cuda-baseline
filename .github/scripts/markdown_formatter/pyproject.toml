@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "markdown_formatter"
+authors = [{ name = "Connor Baker", email = "connor.baker@tweag.io" }]
+description = "Formats JSON output from the Nix applications in this repository as markdown"
+requires-python = ">=3.10"
+license = { text = "BSD-3-Clause" }
+dependencies = ["pydantic"]
+dynamic = ["version"]
+
+[tool.black]
+line-length = 120
+target-version = ["py310"]
+
+[tool.ruff]
+# Enable flake8-bugbear (`B`) rules.
+select = ["E", "F", "B"]
+
+# Never enforce `E501` (line length violations).
+ignore = ["E501"]

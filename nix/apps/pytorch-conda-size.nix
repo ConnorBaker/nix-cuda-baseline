@@ -18,50 +18,82 @@ writeShellApplication {
     + ''
       eval "$(micromamba shell hook -s posix)"
     ''
+    # Create a temporary directory and relevant variables
+    + ''
+      TMP="$(mktemp -d)"
+      TIME_FILE="$TMP/time.json"
+      SIZES_FILE="$TMP/sizes.json"
+    ''
+    # Process the time template
+    + ''
+      TIME_TEMPLATE="$(tr -d '[:space:]' <<EOF
+      ${builtins.readFile ./time-template.txt}
+      EOF
+      )"
+    ''
     # Create the pytorch environment (without printing anything to STDOUT)
     + ''
-      micromamba create -y 1>&2 \
+      /usr/bin/env time \
+        --format="$TIME_TEMPLATE" \
+        --output="$TIME_FILE" \
+        micromamba create -y \
         -n pytorch \
         -c pytorch \
         -c nvidia \
         -c conda-forge \
-        pytorch=${pytorchVersion}=${pytorchBuild}
+        pytorch=${pytorchVersion}=${pytorchBuild} \
+        1>&2
     ''
     # Get the size of the pytorch environment
     + ''
-      ENV_SIZE="$(du -B1 -s "$MAMBA_ROOT_PREFIX/envs/pytorch" | cut -f1)"
-      ENV_HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$ENV_SIZE")"
+      ENVIRONMENT_BYTES="$(du -B1 -s "$MAMBA_ROOT_PREFIX/envs/pytorch" | cut -f1)"
+      ENVIRONMENT_HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$ENVIRONMENT_BYTES")"
     ''
     # Get the size of the pkgs directory
     + ''
-      PKGS_SIZE="$(du -B1 -s "$MAMBA_ROOT_PREFIX/pkgs" | cut -f1)"
-      PKGS_HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$PKGS_SIZE")"
+      PACKAGES_BYTES="$(du -B1 -s "$MAMBA_ROOT_PREFIX/pkgs" | cut -f1)"
+      PACKAGES_HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$PACKAGES_BYTES")"
     ''
     # Get the size of the compressed files in the pkgs directory
     + ''
-      PKGS_COMPRESSED_SIZE="$(du -B1 -sS "$MAMBA_ROOT_PREFIX/pkgs" | cut -f1)"
-      PKGS_COMPRESSED_HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$PKGS_COMPRESSED_SIZE")"
+      PACKAGES_COMPRESSED_BYTES="$(du -B1 -sS "$MAMBA_ROOT_PREFIX/pkgs" | cut -f1)"
+      PACKAGES_COMPRESSED_HUMAN_READABLE="$(numfmt --to iec --format '%.4f' <<< "$PACKAGES_COMPRESSED_BYTES")"
     ''
-    # Print the results as JSON
+    # Write the size results as JSON
     + ''
       jq -cnr \
-        --argjson env_size "$ENV_SIZE" \
-        --arg env_human_readable "$ENV_HUMAN_READABLE" \
-        --argjson pkgs_size "$PKGS_SIZE" \
-        --arg pkgs_human_readable "$PKGS_HUMAN_READABLE" \
-        --argjson pkgs_compressed_size "$PKGS_COMPRESSED_SIZE" \
-        --arg pkgs_compressed_human_readable "$PKGS_COMPRESSED_HUMAN_READABLE" \
+        --argjson environment_bytes "$ENVIRONMENT_BYTES" \
+        --arg environment_human_readable "$ENVIRONMENT_HUMAN_READABLE" \
+        --argjson packages_bytes "$PACKAGES_BYTES" \
+        --arg packages_human_readable "$PACKAGES_HUMAN_READABLE" \
+        --argjson packages_compressed_bytes "$PACKAGES_COMPRESSED_BYTES" \
+        --arg packages_compressed_human_readable "$PACKAGES_COMPRESSED_HUMAN_READABLE" \
       '{
-        env_size: $env_size,
-        env_human_readable: $env_human_readable,
-        pkgs_size: $pkgs_size,
-        pkgs_human_readable: $pkgs_human_readable,
-        pkgs_compressed_size: $pkgs_compressed_size,
-        pkgs_compressed_human_readable: $pkgs_compressed_human_readable,
-      }'
+        environment: {
+          bytes: $environment_bytes,
+          human_readable: $environment_human_readable
+        },
+        packages: {
+          bytes: $packages_bytes,
+          human_readable: $packages_human_readable,
+        },
+        packages_compressed: {
+          bytes: $packages_compressed_bytes,
+          human_readable: $packages_compressed_human_readable
+        }
+      }' \
+      >"$SIZES_FILE"
+    ''
+    # Write the output
+    + ''
+      jq -cnr \
+        --slurpfile time "$TIME_FILE" \
+        --slurpfile sizes "$SIZES_FILE" \
+        '{time: $time[0], sizes: $sizes[0]}'
     ''
     # Cleanup
     + ''
       rm -rf "$MAMBA_ROOT_PREFIX"
+      rm -rf "$TMP"
     '';
 }

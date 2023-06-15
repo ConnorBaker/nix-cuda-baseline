@@ -56,17 +56,18 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        compression-level: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        # compression-level: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        compression-level: [1, 2]
     outputs:
       xz_1_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_1_json }}
       xz_2_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_2_json }}
-      xz_3_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_3_json }}
-      xz_4_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_4_json }}
-      xz_5_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_5_json }}
-      xz_6_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_6_json }}
-      xz_7_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_7_json }}
-      xz_8_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_8_json }}
-      xz_9_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_9_json }}
+      # xz_3_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_3_json }}
+      # xz_4_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_4_json }}
+      # xz_5_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_5_json }}
+      # xz_6_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_6_json }}
+      # xz_7_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_7_json }}
+      # xz_8_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_8_json }}
+      # xz_9_json: ${{ steps.nix-binary-cache-size-xz.outputs.xz_9_json }}
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/nix-setup
@@ -82,27 +83,28 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        compression-level: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        # compression-level: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        compression-level: [1, 2, 3, 4]
     outputs:
       zstd_1_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_1_json }}
       zstd_2_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_2_json }}
       zstd_3_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_3_json }}
       zstd_4_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_4_json }}
-      zstd_5_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_5_json }}
-      zstd_6_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_6_json }}
-      zstd_7_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_7_json }}
-      zstd_8_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_8_json }}
-      zstd_9_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_9_json }}
-      zstd_10_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_10_json }}
-      zstd_11_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_11_json }}
-      zstd_12_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_12_json }}
-      zstd_13_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_13_json }}
-      zstd_14_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_14_json }}
-      zstd_15_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_15_json }}
-      zstd_16_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_16_json }}
-      zstd_17_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_17_json }}
-      zstd_18_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_18_json }}
-      zstd_19_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_19_json }}
+      # zstd_5_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_5_json }}
+      # zstd_6_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_6_json }}
+      # zstd_7_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_7_json }}
+      # zstd_8_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_8_json }}
+      # zstd_9_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_9_json }}
+      # zstd_10_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_10_json }}
+      # zstd_11_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_11_json }}
+      # zstd_12_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_12_json }}
+      # zstd_13_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_13_json }}
+      # zstd_14_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_14_json }}
+      # zstd_15_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_15_json }}
+      # zstd_16_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_16_json }}
+      # zstd_17_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_17_json }}
+      # zstd_18_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_18_json }}
+      # zstd_19_json: ${{ steps.nix-binary-cache-size-zstd.outputs.zstd_19_json }}
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/nix-setup
@@ -122,180 +124,64 @@ jobs:
       - nix-binary-cache-size-xz
       - nix-binary-cache-size-zstd
     steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/nix-setup
       - name: Conda size markdown
         env:
-          ENV_SIZE: ${{ fromJSON(needs.conda-size.outputs.json).env_size }}
-          ENV_HUMAN_READABLE: ${{ fromJSON(needs.conda-size.outputs.json).env_human_readable }}
-          PKGS_SIZE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_size }}
-          PKGS_HUMAN_READABLE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_human_readable }}
-          PKGS_COMPRESSED_SIZE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_compressed_size }}
-          PKGS_COMPRESSED_HUMAN_READABLE: ${{ fromJSON(needs.conda-size.outputs.json).pkgs_compressed_human_readable }}
+          JSON: ${{ needs.conda-size.outputs.json }}
         run: |
-          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
-          ## Conda size
-
-          Components:
-
-          - Environment: the environment directory size
-          - Packages: the packages directory size
-          - Packages (compressed): the size of compressed files in the packages directory (representative of downloaded artifacts)
-
-          | Component | Size | Bytes |
-          | --- | --- | --- |
-          | Environment | $ENV_HUMAN_READABLE | $ENV_SIZE |
-          | Packages | $PKGS_HUMAN_READABLE | $PKGS_SIZE |
-          | Packages (compressed) | $PKGS_COMPRESSED_HUMAN_READABLE | $PKGS_COMPRESSED_SIZE |
-
-          EOF
+          nix develop --command -- \
+              python3 ./.github/scripts/markdown_formatter \
+              --app Conda \
+              <<< "$JSON" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Docker image size markdown
         env:
-          SIZE: ${{ fromJSON(needs.docker-image-size.outputs.json).size }}
-          HUMAN_READABLE: ${{ fromJSON(needs.docker-image-size.outputs.json).human_readable }}
+          JSON: ${{ needs.docker-image-size.outputs.json }}
         run: |
-          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
-          ## Docker image size
-
-          The size of the compressed Docker image:
-
-          | Size | Bytes |
-          | --- | --- |
-          | $HUMAN_READABLE | $SIZE |
-
-          EOF
+          nix develop --command -- \
+              python3 ./.github/scripts/markdown_formatter \
+              --app DockerImage \
+              <<< "$JSON" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Nix store size markdown
         env:
-          SIZE: ${{ fromJSON(needs.nix-store-size.outputs.json).size }}
-          HUMAN_READABLE: ${{ fromJSON(needs.nix-store-size.outputs.json).human_readable }}
+          JSON: ${{ needs.nix-store-size.outputs.json }}
         run: |
-          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
-          ## Nix store size
-
-          The size of the closure in the Nix store:
-
-          | Size | Bytes |
-          | --- | --- |
-          | $HUMAN_READABLE | $SIZE |
-
-          EOF
-
-      - name: Nix binary cache size (zstd) markdown
-        env:
-          STORE_SIZE: ${{ fromJSON(needs.nix-store-size.outputs.json).size }}
-          ZSTD_1_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_1_json).size }}
-          ZSTD_1_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_1_json).human_readable }}
-          ZSTD_2_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_2_json).size }}
-          ZSTD_2_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_2_json).human_readable }}
-          ZSTD_3_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_3_json).size }}
-          ZSTD_3_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_3_json).human_readable }}
-          ZSTD_4_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_4_json).size }}
-          ZSTD_4_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_4_json).human_readable }}
-          ZSTD_5_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_5_json).size }}
-          ZSTD_5_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_5_json).human_readable }}
-          ZSTD_6_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_6_json).size }}
-          ZSTD_6_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_6_json).human_readable }}
-          ZSTD_7_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_7_json).size }}
-          ZSTD_7_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_7_json).human_readable }}
-          ZSTD_8_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_8_json).size }}
-          ZSTD_8_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_8_json).human_readable }}
-          ZSTD_9_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_9_json).size }}
-          ZSTD_9_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_9_json).human_readable }}
-          ZSTD_10_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_10_json).size }}
-          ZSTD_10_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_10_json).human_readable }}
-          ZSTD_11_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_11_json).size }}
-          ZSTD_11_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_11_json).human_readable }}
-          ZSTD_12_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_12_json).size }}
-          ZSTD_12_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_12_json).human_readable }}
-          ZSTD_13_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_13_json).size }}
-          ZSTD_13_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_13_json).human_readable }}
-          ZSTD_14_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_14_json).size }}
-          ZSTD_14_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_14_json).human_readable }}
-          ZSTD_15_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_15_json).size }}
-          ZSTD_15_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_15_json).human_readable }}
-          ZSTD_16_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_16_json).size }}
-          ZSTD_16_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_16_json).human_readable }}
-          ZSTD_17_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_17_json).size }}
-          ZSTD_17_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_17_json).human_readable }}
-          ZSTD_18_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_18_json).size }}
-          ZSTD_18_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_18_json).human_readable }}
-          ZSTD_19_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_19_json).size }}
-          ZSTD_19_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-zstd.outputs.zstd_19_json).human_readable }}
-        run: |
-          compression_ratio() {
-            awk "BEGIN{printf \"%.4f\", ($STORE_SIZE / $1)}"
-          }
-
-          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
-          ## Nix binary cache size (zstd)
-
-          The size of the closure in the Nix binary cache using zstd at various compression levels:
-
-          | Compression Level | Size | Bytes | Compression Ratio |
-          | --- | --- | --- | --- |
-          | 1 | $ZSTD_1_HUMAN_READABLE | $ZSTD_1_SIZE | $(compression_ratio $ZSTD_1_SIZE) |
-          | 2 | $ZSTD_2_HUMAN_READABLE | $ZSTD_2_SIZE | $(compression_ratio $ZSTD_2_SIZE) |
-          | 3 | $ZSTD_3_HUMAN_READABLE | $ZSTD_3_SIZE | $(compression_ratio $ZSTD_3_SIZE) |
-          | 4 | $ZSTD_4_HUMAN_READABLE | $ZSTD_4_SIZE | $(compression_ratio $ZSTD_4_SIZE) |
-          | 5 | $ZSTD_5_HUMAN_READABLE | $ZSTD_5_SIZE | $(compression_ratio $ZSTD_5_SIZE) |
-          | 6 | $ZSTD_6_HUMAN_READABLE | $ZSTD_6_SIZE | $(compression_ratio $ZSTD_6_SIZE) |
-          | 7 | $ZSTD_7_HUMAN_READABLE | $ZSTD_7_SIZE | $(compression_ratio $ZSTD_7_SIZE) |
-          | 8 | $ZSTD_8_HUMAN_READABLE | $ZSTD_8_SIZE | $(compression_ratio $ZSTD_8_SIZE) |
-          | 9 | $ZSTD_9_HUMAN_READABLE | $ZSTD_9_SIZE | $(compression_ratio $ZSTD_9_SIZE) |
-          | 10 | $ZSTD_10_HUMAN_READABLE | $ZSTD_10_SIZE | $(compression_ratio $ZSTD_10_SIZE) |
-          | 11 | $ZSTD_11_HUMAN_READABLE | $ZSTD_11_SIZE | $(compression_ratio $ZSTD_11_SIZE) |
-          | 12 | $ZSTD_12_HUMAN_READABLE | $ZSTD_12_SIZE | $(compression_ratio $ZSTD_12_SIZE) |
-          | 13 | $ZSTD_13_HUMAN_READABLE | $ZSTD_13_SIZE | $(compression_ratio $ZSTD_13_SIZE) |
-          | 14 | $ZSTD_14_HUMAN_READABLE | $ZSTD_14_SIZE | $(compression_ratio $ZSTD_14_SIZE) |
-          | 15 | $ZSTD_15_HUMAN_READABLE | $ZSTD_15_SIZE | $(compression_ratio $ZSTD_15_SIZE) |
-          | 16 | $ZSTD_16_HUMAN_READABLE | $ZSTD_16_SIZE | $(compression_ratio $ZSTD_16_SIZE) |
-          | 17 | $ZSTD_17_HUMAN_READABLE | $ZSTD_17_SIZE | $(compression_ratio $ZSTD_17_SIZE) |
-          | 18 | $ZSTD_18_HUMAN_READABLE | $ZSTD_18_SIZE | $(compression_ratio $ZSTD_18_SIZE) |
-          | 19 | $ZSTD_19_HUMAN_READABLE | $ZSTD_19_SIZE | $(compression_ratio $ZSTD_19_SIZE) |
-
-          EOF
+          nix develop --command -- \
+              python3 ./.github/scripts/markdown_formatter \
+              --app NixStore \
+              <<< "$JSON" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
 
       - name: Nix binary cache size (xz) markdown
         env:
-          STORE_SIZE: ${{ fromJSON(needs.nix-store-size.outputs.json).size }}
-          XZ_1_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_1_json).size }}
-          XZ_1_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_1_json).human_readable }}
-          XZ_2_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_2_json).size }}
-          XZ_2_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_2_json).human_readable }}
-          XZ_3_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_3_json).size }}
-          XZ_3_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_3_json).human_readable }}
-          XZ_4_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_4_json).size }}
-          XZ_4_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_4_json).human_readable }}
-          XZ_5_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_5_json).size }}
-          XZ_5_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_5_json).human_readable }}
-          XZ_6_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_6_json).size }}
-          XZ_6_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_6_json).human_readable }}
-          XZ_7_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_7_json).size }}
-          XZ_7_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_7_json).human_readable }}
-          XZ_8_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_8_json).size }}
-          XZ_8_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_8_json).human_readable }}
-          XZ_9_SIZE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_9_json).size }}
-          XZ_9_HUMAN_READABLE: ${{ fromJSON(needs.nix-binary-cache-size-xz.outputs.xz_9_json).human_readable }}
+          JSON1: ${{ needs.nix-binary-cache-size-xz.outputs.xz_1_json }}
+          JSON2: ${{ needs.nix-binary-cache-size-xz.outputs.xz_2_json }}
         run: |
-          compression_ratio() {
-            awk "BEGIN{printf \"%.4f\", ($STORE_SIZE / $1)}"
-          }
+          JSON="[$JSON1,$JSON2]"
+          nix develop --command -- \
+              python3 ./.github/scripts/markdown_formatter \
+              --app NixBinaryCache \
+              --batched \
+              --include-time \
+              <<< "$JSON" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
 
-          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
-          ## Nix binary cache size (xz)
-
-          The size of the closure in the Nix binary cache using xz at various compression levels:
-
-          | Compression Level | Size | Bytes | Compression Ratio |
-          | --- | --- | --- | --- |
-          | 1 | $XZ_1_HUMAN_READABLE | $XZ_1_SIZE | $(compression_ratio $XZ_1_SIZE) |
-          | 2 | $XZ_2_HUMAN_READABLE | $XZ_2_SIZE | $(compression_ratio $XZ_2_SIZE) |
-          | 3 | $XZ_3_HUMAN_READABLE | $XZ_3_SIZE | $(compression_ratio $XZ_3_SIZE) |
-          | 4 | $XZ_4_HUMAN_READABLE | $XZ_4_SIZE | $(compression_ratio $XZ_4_SIZE) |
-          | 5 | $XZ_5_HUMAN_READABLE | $XZ_5_SIZE | $(compression_ratio $XZ_5_SIZE) |
-          | 6 | $XZ_6_HUMAN_READABLE | $XZ_6_SIZE | $(compression_ratio $XZ_6_SIZE) |
-          | 7 | $XZ_7_HUMAN_READABLE | $XZ_7_SIZE | $(compression_ratio $XZ_7_SIZE) |
-          | 8 | $XZ_8_HUMAN_READABLE | $XZ_8_SIZE | $(compression_ratio $XZ_8_SIZE) |
-          | 9 | $XZ_9_HUMAN_READABLE | $XZ_9_SIZE | $(compression_ratio $XZ_9_SIZE) |
-
-          EOF
+      - name: Nix binary cache size (zstd) markdown
+        env:
+          JSON1: ${{ needs.nix-binary-cache-size-zstd.outputs.zstd_1_json }}
+          JSON2: ${{ needs.nix-binary-cache-size-zstd.outputs.zstd_2_json }}
+          JSON3: ${{ needs.nix-binary-cache-size-zstd.outputs.zstd_3_json }}
+          JSON4: ${{ needs.nix-binary-cache-size-zstd.outputs.zstd_4_json }}
+        run: |
+          JSON="[$JSON1,$JSON2,$JSON3,$JSON4]"
+          nix develop --command -- \
+              python3 ./.github/scripts/markdown_formatter \
+              --app NixBinaryCache \
+              --batched \
+              --include-time \
+              <<< "$JSON" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
